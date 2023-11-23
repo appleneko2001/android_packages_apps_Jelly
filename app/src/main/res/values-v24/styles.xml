@@ -105,7 +105,7 @@
     </style>
 
     <!-- Settings switch theme. -->
-    <style name="Theme.Jelly.Settings.Switch" parent="Widget.Material3.CompoundButton.Switch">
+    <style name="Theme.Jelly.Settings.Switch" parent="@android:style/Widget.Material.CompoundButton.Switch">
         <item name="android:switchMinWidth">52dp</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:track">@drawable/settingslib_switch_track</item>

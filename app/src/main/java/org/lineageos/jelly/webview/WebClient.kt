@@ -51,7 +51,7 @@ internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient
             val url = request.url.toString()
             val needsLookup = (request.hasGesture()
                     || !TextUtils.equals(url, webViewExt.lastLoadedUrl))
-            if (!webViewExt.isIncognito
+            if (!webViewExt.isIncognito && Build.VERSION.SDK_INT >= 24
                 && needsLookup
                 && startActivityForUrl(view, url)
                 && !request.isRedirect

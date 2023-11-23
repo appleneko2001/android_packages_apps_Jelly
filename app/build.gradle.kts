@@ -32,7 +32,7 @@ android {
 
     defaultConfig {
         applicationId = "org.lineageos.jelly"
-        minSdk = 26
+        minSdk = 23
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"

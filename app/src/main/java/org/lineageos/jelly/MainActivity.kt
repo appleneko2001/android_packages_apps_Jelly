@@ -14,11 +14,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.Icon
 import android.net.Uri
 import android.net.http.HttpResponseCache
 import android.os.Build
@@ -47,6 +44,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.updateLayoutParams
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -171,9 +171,6 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
         val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
         preferenceManager.registerOnSharedPreferenceChangeListener(this)
-
-        // Register app shortcuts
-        registerShortcuts()
 
         urlBarLayout.isIncognito = incognito
 
@@ -313,22 +310,6 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         outState.putString(IntentUtils.EXTRA_URL, webView.url)
         outState.putBoolean(IntentUtils.EXTRA_INCOGNITO, webView.isIncognito)
         outState.putBoolean(IntentUtils.EXTRA_DESKTOP_MODE, webView.isDesktopMode)
-    }
-
-    private fun registerShortcuts() {
-        val shortcutManager = getSystemService(ShortcutManager::class.java)
-        shortcutManager.dynamicShortcuts = listOf(
-            ShortcutInfo.Builder(this, "new_incognito_tab_shortcut")
-                .setShortLabel(getString(R.string.shortcut_new_incognito_tab))
-                .setLongLabel(getString(R.string.shortcut_new_incognito_tab))
-                .setIcon(Icon.createWithResource(this, R.drawable.shortcut_incognito))
-                .setIntent(
-                    Intent(this, MainActivity::class.java)
-                        .putExtra("extra_incognito", true)
-                        .setAction(Intent.ACTION_VIEW)
-                )
-                .build()
-        )
     }
 
     private fun showSearch() {
@@ -555,15 +536,15 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
             action = Intent.ACTION_MAIN
         }
         val launcherIcon = urlIcon?.let {
-            Icon.createWithBitmap(UiUtils.getShortcutIcon(it, Color.WHITE))
-        } ?: Icon.createWithResource(this, R.mipmap.ic_launcher)
+            IconCompat.createWithBitmap(UiUtils.getShortcutIcon(it, Color.WHITE))
+        } ?: IconCompat.createWithResource(this, R.mipmap.ic_launcher)
         val title = webView.title.toString()
-        val shortcutInfo = ShortcutInfo.Builder(this, title)
+        val shortcutInfoCompat = ShortcutInfoCompat.Builder(this, title)
             .setShortLabel(title)
             .setIcon(launcherIcon)
             .setIntent(intent)
             .build()
-        getSystemService(ShortcutManager::class.java).requestPinShortcut(shortcutInfo, null)
+        ShortcutManagerCompat.requestPinShortcut(this, shortcutInfoCompat, null)
     }
 
     @Suppress("DEPRECATION")
