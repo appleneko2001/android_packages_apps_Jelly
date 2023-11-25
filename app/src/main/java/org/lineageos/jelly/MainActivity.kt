@@ -14,6 +14,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -126,6 +127,7 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
             receiver.send(Activity.RESULT_CANCELED, Bundle())
         }
     }
+    private var mWaitingDownloadUrl: String? = null
     private var urlIcon: Bitmap? = null
     private var incognito = false
     private var customView: View? = null
@@ -288,6 +290,32 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         super.onPause()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            results: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, results)
+        when (requestCode) {
+            STORAGE_PERM_REQ -> if (hasStoragePermission() && mWaitingDownloadUrl != null) {
+                downloadFileAsk(mWaitingDownloadUrl, null, null, mimeType = null, contentLength = 0)
+            } else {
+                if (shouldShowRequestPermissionRationale(
+                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder(this)
+                            .setTitle(R.string.permission_error_title)
+                            .setMessage(R.string.permission_error_storage)
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.permission_error_ask_again)
+                            ) { _: DialogInterface?, _: Int -> requestStoragePermission() }
+                            .setNegativeButton(getString(R.string.dismiss)
+                            ) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+                            .show()
+                } else {
+                    Snackbar.make(constraintLayout, getString(R.string.permission_error_forever),
+                            Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         webView.onResume()
@@ -369,6 +397,16 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         contentLength: Long
     ) {
         val fileName = UrlUtils.guessFileName(url, contentDisposition, mimeType)
+
+        if (  Build.VERSION.SDK_INT < 29 ) {
+            if (!hasStoragePermission()) {
+                mWaitingDownloadUrl = url
+                requestStoragePermission()
+                return
+            }
+            mWaitingDownloadUrl = null
+        }
+
         AlertDialog.Builder(this)
             .setTitle(R.string.download_title)
             .setMessage(getString(R.string.download_message, fileName))
@@ -443,6 +481,15 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         }
         sheet.setContentView(view)
         sheet.show()
+    }
+    private fun requestStoragePermission() {
+        val permissionArray = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        requestPermissions(permissionArray, STORAGE_PERM_REQ)
+    }
+
+    private fun hasStoragePermission(): Boolean {
+        val result = checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
     }
 
     /*
@@ -634,5 +681,6 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
     companion object {
         private val TAG = MainActivity::class.java.simpleName
         private const val PROVIDER = "${BuildConfig.APPLICATION_ID}.fileprovider"
+        private const val STORAGE_PERM_REQ = 423
     }
 }
