@@ -210,4 +210,10 @@
     <string name="location_dialog_allow">Allow</string>
     <string name="location_dialog_block">Block</string>
     <string name="location_dialog_cancel">Deny for now</string>
+
+    <!-- Settings: default to incognito -->
+    <string name="pref_incognito_policy">Default to incognito</string>
+    <!-- Settings: save form data title -->
+    <string name="pref_save_form_data_title">Save form data</string>
+
 </resources>

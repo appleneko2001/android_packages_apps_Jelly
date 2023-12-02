@@ -9,6 +9,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -54,6 +55,7 @@ class WebViewExt @JvmOverloads constructor(
         settings.javaScriptCanOpenWindowsAutomatically = sharedPreferencesExt.javascriptEnabled
         settings.setGeolocationEnabled(sharedPreferencesExt.locationEnabled)
         settings.setSupportMultipleWindows(true)
+        if (  Build.VERSION.SDK_INT < 26 )settings.saveFormData = (!isIncognito && sharedPreferencesExt.saveFormData)
         settings.builtInZoomControls = true
         settings.displayZoomControls = false
         settings.databaseEnabled = !isIncognito

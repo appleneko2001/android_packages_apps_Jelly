@@ -52,8 +52,14 @@ class SharedPreferencesExt(context: Context) {
     val cookiesEnabled: Boolean
         get() = sharedPreferences.getBoolean(COOKIES_ENABLED_KEY, COOKIES_ENABLED_DEFAULT)
 
+    val incognitoPolicy: Int
+        get() = Integer.parseInt(sharedPreferences.getString(KEY_INCOGNITO_POLICY, "0")!!)
+
     val doNotTrackEnabled: Boolean
         get() = sharedPreferences.getBoolean(DO_NOT_TRACK_ENABLED_KEY, DO_NOT_TRACK_ENABLED_DEFAULT)
+
+    val saveFormData: Boolean
+        get() = sharedPreferences.getBoolean(KEY_SAVE_FORM_DATA, true)
 
     val suggestionProvider: SuggestionProvider
         get() = runCatching {
@@ -94,5 +100,8 @@ class SharedPreferencesExt(context: Context) {
 
         private const val REACH_MODE_ENABLED_KEY = "key_reach_mode"
         private const val REACH_MODE_ENABLED_DEFAULT = false
+
+        private const val KEY_INCOGNITO_POLICY = "key_incognito_policy"
+        private const val KEY_SAVE_FORM_DATA = "key_save_form_data"
     }
 }

@@ -155,9 +155,19 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        // Make sure prefs are set before loading them
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
+        preferenceManager.registerOnSharedPreferenceChangeListener(this)
+
         val intent = intent
         var url = intent.dataString
-        incognito = intent.getBooleanExtra(IntentUtils.EXTRA_INCOGNITO, false)
+        incognito = when (sharedPreferencesExt.incognitoPolicy) {
+            ALWAYS_DEFAULT_TO_INCOGNITO -> true
+            EXTERNAL_DEFAULT_TO_INCOGNITO -> !Intent.ACTION_MAIN.equals(intent.action)
+            else -> intent.getBooleanExtra(IntentUtils.EXTRA_INCOGNITO, false)
+        }
         var desktopMode = false
 
         // Restore from previous instance
@@ -168,11 +178,6 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
             } ?: it.getString(IntentUtils.EXTRA_URL, null)
             desktopMode = it.getBoolean(IntentUtils.EXTRA_DESKTOP_MODE, false)
         }
-
-        // Make sure prefs are set before loading them
-        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
-        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(this)
-        preferenceManager.registerOnSharedPreferenceChangeListener(this)
 
         urlBarLayout.isIncognito = incognito
 
@@ -682,5 +687,7 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         private val TAG = MainActivity::class.java.simpleName
         private const val PROVIDER = "${BuildConfig.APPLICATION_ID}.fileprovider"
         private const val STORAGE_PERM_REQ = 423
+        private const val ALWAYS_DEFAULT_TO_INCOGNITO = 1
+        private const val EXTERNAL_DEFAULT_TO_INCOGNITO = 2
     }
 }

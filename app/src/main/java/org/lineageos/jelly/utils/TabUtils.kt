@@ -16,6 +16,7 @@ object TabUtils {
             url?.takeIf { it.isNotEmpty() }?.let {
                 data = Uri.parse(it)
             }
+            action = Intent.ACTION_MAIN
             flags = Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
             putExtra(IntentUtils.EXTRA_INCOGNITO, incognito)
         }

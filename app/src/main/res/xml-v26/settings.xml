@@ -56,12 +56,6 @@
         <SwitchPreference
             app:defaultValue="1"
             app:iconSpaceReserved="false"
-            app:key="key_save_form_data"
-            app:title="@string/pref_save_form_data_title" />
-
-        <SwitchPreference
-            app:defaultValue="1"
-            app:iconSpaceReserved="false"
             app:key="key_javascript"
             app:summary="@string/pref_js_summary"
             app:title="@string/pref_js_title" />
