@@ -689,5 +689,18 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         private const val STORAGE_PERM_REQ = 423
         private const val ALWAYS_DEFAULT_TO_INCOGNITO = 1
         private const val EXTERNAL_DEFAULT_TO_INCOGNITO = 2
+        // Intents used for QuickTiles and other shortcuts
+        fun handleShortcuts(c: Context, shortcut: String?): Boolean {
+            when (shortcut) {
+                "incognito" -> {
+                    val intent = Intent(c, MainActivity::class.java)
+                    intent.putExtra(IntentUtils.EXTRA_INCOGNITO, true)
+                    c.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                }
+                "newtab" -> c.startActivity(Intent(c, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                "favorites" -> c.startActivity(Intent(c, FavoriteActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            }
+            return true
+        }
     }
 }
