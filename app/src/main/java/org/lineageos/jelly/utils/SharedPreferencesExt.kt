@@ -26,6 +26,9 @@ class SharedPreferencesExt(context: Context) {
         }
     }
 
+    val adBlocker: Boolean
+        get() = sharedPreferences.getBoolean(KEY_ADBLOCKER, true)
+
     val searchEngine: String
         get() = sharedPreferences.getString(
             SEARCH_ENGINE_KEY, defaultSearchEngine
@@ -103,5 +106,6 @@ class SharedPreferencesExt(context: Context) {
 
         private const val KEY_INCOGNITO_POLICY = "key_incognito_policy"
         private const val KEY_SAVE_FORM_DATA = "key_save_form_data"
+        private const val KEY_ADBLOCKER = "key_adblocker"
     }
 }

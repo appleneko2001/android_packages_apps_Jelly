@@ -63,6 +63,7 @@ import org.lineageos.jelly.favorite.FavoriteProvider
 import org.lineageos.jelly.history.HistoryActivity
 import org.lineageos.jelly.ui.MenuDialog
 import org.lineageos.jelly.ui.UrlBarLayout
+import org.lineageos.jelly.utils.AdBlocker
 import org.lineageos.jelly.utils.IntentUtils
 import org.lineageos.jelly.utils.PermissionsUtils
 import org.lineageos.jelly.utils.SharedPreferencesExt
@@ -236,6 +237,7 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         webView.init(this, urlBarLayout, incognito)
         webView.isDesktopMode = desktopMode
         webView.loadUrl(url ?: sharedPreferencesExt.homePage)
+        AdBlocker.init(this)
         setUiMode()
         try {
             val httpCacheDir = File(cacheDir, "suggestion_responses")

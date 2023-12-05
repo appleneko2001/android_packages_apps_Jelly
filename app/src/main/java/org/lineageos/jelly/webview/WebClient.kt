@@ -19,10 +19,7 @@ import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.webkit.HttpAuthHandler
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -30,11 +27,15 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import org.lineageos.jelly.R
 import org.lineageos.jelly.ui.UrlBarLayout
+import org.lineageos.jelly.utils.AdBlocker
 import org.lineageos.jelly.utils.IntentUtils
+import org.lineageos.jelly.utils.SharedPreferencesExt
 import org.lineageos.jelly.utils.UrlUtils
 import java.net.URISyntaxException
 
 internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient() {
+    private val loadedUrls: MutableMap<String, Boolean> = HashMap()
+
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
         urlBarLayout.onPageLoadStarted(url)
@@ -133,6 +134,19 @@ internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient
             ).show()
         }
         return false
+    }
+    override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+        val ad: Boolean
+        val sharedPreferencesExt by lazy { SharedPreferencesExt(view.context) } //
+        if (!sharedPreferencesExt.adBlocker) return super.shouldInterceptRequest(view, request)
+        val url = request.url.toString()
+        if (!loadedUrls.containsKey(url)) {
+            ad = AdBlocker.isAd(url)
+            loadedUrls.put(url, ad)
+        } else {
+            ad = loadedUrls[url]!!
+        }
+        return if (ad) AdBlocker.createEmptyResource() else super.shouldInterceptRequest(view, request)
     }
 
     @SuppressLint("QueryPermissionsNeeded")

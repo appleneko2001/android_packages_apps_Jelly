@@ -55,6 +55,13 @@
 
         <SwitchPreference
             app:defaultValue="1"
+            app:key="key_adblocker"
+            app:iconSpaceReserved="false"
+            app:summary="@string/pref_adblocker_summary"
+            app:title="@string/pref_adblocker_title" />
+
+        <SwitchPreference
+            app:defaultValue="1"
             app:iconSpaceReserved="false"
             app:key="key_javascript"
             app:summary="@string/pref_js_summary"

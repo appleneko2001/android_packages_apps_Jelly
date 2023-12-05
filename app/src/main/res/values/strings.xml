@@ -221,5 +221,9 @@
     <string name="pref_incognito_policy">Default to incognito</string>
     <!-- Settings: save form data title -->
     <string name="pref_save_form_data_title">Save form data</string>
+    <!-- Settings: adblocker title -->
+    <string name="pref_adblocker_title">Adblocker</string>
+    <!-- Settings: adblocker summary -->
+    <string name="pref_adblocker_summary">Block advertisements while browsing</string>
 
 </resources>
