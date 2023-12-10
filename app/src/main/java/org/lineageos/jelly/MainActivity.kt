@@ -38,6 +38,8 @@ import android.webkit.CookieManager
 import android.webkit.GeolocationPermissions
 import android.webkit.MimeTypeMap
 import android.webkit.WebChromeClient.CustomViewCallback
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -181,6 +183,7 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         }
 
         urlBarLayout.isIncognito = incognito
+        urlBarLayout.webView = webView
 
         menuDialog = MenuDialog(this) { option: MenuDialog.Option ->
             val isDesktop = webView.isDesktopMode
@@ -537,6 +540,19 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
             }
             urlIcon = it.copy(it.config, true)
             updateTaskDescription()
+
+            if (!incognito) {
+                val favicon1 = findViewById<View>(R.id.incognitoIcon) as ImageButton
+                if (urlIcon == null || urlIcon!!.isRecycled) {
+                    favicon1.visibility = View.GONE
+                } else {
+                    favicon1.visibility = View.VISIBLE
+                    favicon1.setImageBitmap(urlIcon) //favicon1.setImageDrawable(RoundedBitmapDrawableFactory.create(resources,urlIcon)) //favicon1.setImageDrawable(BitmapDrawable(resources,urlIcon))
+                    favicon1.scaleType = ImageView.ScaleType.FIT_CENTER
+                }
+
+            }
+
             if (!it.isRecycled) {
                 it.recycle()
             }

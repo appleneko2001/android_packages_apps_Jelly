@@ -36,7 +36,7 @@
         app:title="@string/pref_screenshot_snap_title" />
 
     <SwitchPreference
-        app:defaultValue="0"
+        app:defaultValue="1"
         app:iconSpaceReserved="false"
         app:key="key_reach_mode"
         app:summary="@string/pref_reach_mode_summary"

@@ -7,12 +7,15 @@ package org.lineageos.jelly.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.http.SslCertificate
+import android.os.Build
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
+import android.webkit.WebView
 import android.widget.AdapterView
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
@@ -20,11 +23,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import org.lineageos.jelly.R
+import org.lineageos.jelly.SettingsActivity
 import org.lineageos.jelly.ext.requireActivity
 import org.lineageos.jelly.suggestions.SuggestionsAdapter
 import org.lineageos.jelly.utils.UiUtils
@@ -93,6 +98,11 @@ class UrlBarLayout @JvmOverloads constructor(
 
             autoCompleteTextView.setText(value)
             secureButton.isVisible = value?.startsWith("https://") == true
+        }
+
+    var webView: WebView? = null
+        set(value) {
+            field = value
         }
 
     private var certificate: SslCertificate? = null
@@ -190,7 +200,7 @@ class UrlBarLayout @JvmOverloads constructor(
             autoCompleteTextView.clearFocus()
             onLoadUrlCallback?.invoke(text)
         }
-        if (isIncognito) {
+        if (isIncognito && Build.VERSION.SDK_INT >= 26) {
             autoCompleteTextView.imeOptions = autoCompleteTextView.imeOptions or
                     EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
         }
@@ -205,6 +215,20 @@ class UrlBarLayout @JvmOverloads constructor(
                     sslCertificateInfoDialog.show()
                 }
             }
+        }
+        // Set FAVICON button callback
+        incognitoIcon.setOnClickListener {
+            webView?.reload()
+        }
+        // Set secure button LONG callback
+        incognitoIcon.setOnLongClickListener {
+            webView?.goForward()
+            true
+        }
+        // Set FAVICON button LONG callback
+        secureButton.setOnLongClickListener {
+            startActivity(context,Intent(context, SettingsActivity::class.java), null)
+            true
         }
 
         // Set search callbacks
