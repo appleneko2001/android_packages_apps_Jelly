@@ -33,7 +33,7 @@ android {
     defaultConfig {
         applicationId = "org.lineageos.jelly"
         minSdk = 23
-        targetSdk = 33
+        targetSdk = 32 //33onlyShare
         versionCode = 1
         versionName = "1.0"
     }
@@ -86,6 +86,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
     implementation("androidx.leanback:leanback:1.0.0")
+    implementation("com.sun.mail:android-mail:1.6.5")
 }
 
 configure<GenerateBpPluginExtension> {
