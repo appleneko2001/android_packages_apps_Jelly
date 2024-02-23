@@ -7,7 +7,7 @@
     <!-- Shared preferences -->
     <include
         domain="sharedpref"
-        path="org.lineageos.jelly_preferences.xml" />
+        path="com.oF2pks.jquarks_preferences.xml" />
 
     <!-- Databases -->
     <include

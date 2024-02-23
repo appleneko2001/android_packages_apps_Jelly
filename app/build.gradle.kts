@@ -31,11 +31,11 @@ android {
     namespace = "org.lineageos.jelly"
 
     defaultConfig {
-        applicationId = "org.lineageos.jelly"
+        applicationId = "com.oF2pks.jquarks"
         minSdk = 23
         targetSdk = 32 //33onlyShare
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 22
+        versionName = "1.0-22"
     }
 
     buildTypes {

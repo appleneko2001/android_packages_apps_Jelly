@@ -1,0 +1,16 @@
+ - ads_blocker list updated
+ - GoForward option added in tabsMenu
+ - longClick on secureIcon (SSLcertificate), to settingsMenu
+ - update translations
+ - SDK up to 32: android 12 (Snowcone)
+ 
+(last java version before upcoming kotlin release: https://github.com/iotY/android_packages_apps_Jelly/tree/fdroid21)
+
+...
+ - Share content: for mp4/html/mht/xml/svg/eml & any text files.
+ - fix Android 10 & 11 new SAF with optionnal scoped storage in /Download
+ - wip : .eml viewer
+
+...
+ - android TV menu compatibility (+ w.i.p. samsung Dex)
+ 
