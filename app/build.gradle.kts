@@ -34,8 +34,8 @@ android {
         applicationId = "com.oF2pks.jquarks"
         minSdk = 23
         targetSdk = 32 //33onlyShare
-        versionCode = 22
-        versionName = "1.0-22"
+        versionCode = 23
+        versionName = "1.0-23"
     }
 
     buildTypes {
