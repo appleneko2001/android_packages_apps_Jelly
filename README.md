@@ -36,6 +36,7 @@ Ads blocker and favicon in search bar based on this: https://github.com/CarbonRO
 ### More Search-engine(s):
 chosen one (via /Settings/) triggered, from any selected text (anywhere via longpress)
  * Gibiru
+ * Google without AI
  * Mojeek
  * Qwant
  * SearX
