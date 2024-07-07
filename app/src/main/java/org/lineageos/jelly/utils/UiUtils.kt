@@ -55,13 +55,15 @@ object UiUtils {
                 "; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/" +
                 userWeb(WebSettings.getDefaultUserAgent(ctx)) +
                 ".0.1.2 Mobile Safari/537.36")
-        else ("Mozilla/5.0 (Android 10; Mobile; rv:" +
+        else "Mozilla/5.0 (Linux x86_64; rv:115.0) Gecko/20100101 Firefox/115.0"
+            // not working with udm=14
+            /*("Mozilla/5.0 (Android 10; Mobile; rv:" +
                 userWeb(WebSettings.getDefaultUserAgent(ctx)) +
                 ".0) Gecko/"+
                 userWeb(WebSettings.getDefaultUserAgent(ctx)) +
                 ".0 Firefox/"+
                 userWeb(WebSettings.getDefaultUserAgent(ctx)) +
-                ".0")
+                ".0")*/
     }
 
     fun getGray(resources: Resources?): Int {
