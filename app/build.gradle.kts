@@ -6,6 +6,9 @@
 import org.lineageos.generatebp.GenerateBpPlugin
 import org.lineageos.generatebp.GenerateBpPluginExtension
 import org.lineageos.generatebp.models.Module
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 plugins {
     id("com.android.application")
@@ -26,6 +29,17 @@ buildscript {
     }
 }
 
+fun getDateCode(now: ZonedDateTime) : Int{
+    // 1735484400 is the day of the first version build (30 Dec 2024 UTC 00:00)
+    return (now.toEpochSecond() - 1735484400).toInt();
+}
+
+fun getDateText(now: ZonedDateTime) :String {
+    return now.format(DateTimeFormatter.ofPattern("yyyy.mm.dd hh:mm"))
+}
+
+val now: ZonedDateTime = ZonedDateTime.now(ZoneId.of("Etc/UTC"))
+
 android {
     compileSdk = 33
     namespace = "org.lineageos.jelly"
@@ -33,9 +47,11 @@ android {
     defaultConfig {
         applicationId = "ru.appleneko2001.jquarksmod"
         minSdk = 23
-        targetSdk = 32 //33onlyShare
-        versionCode = 24
-        versionName = "1.0-24"
+
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk = 32
+        versionCode = getDateCode(now)
+        versionName = getDateText(now)
     }
 
     buildTypes {
