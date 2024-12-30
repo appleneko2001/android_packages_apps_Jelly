@@ -219,16 +219,21 @@ class SettingsActivity : AppCompatActivity() {
                     findPreference<Preference>("key_about_useragent")?.let {
                         it.summary = UiUtils.fakeUserAgent(requireContext(), false, sharedPreferencesExt.randomUserAgent)
                     }
-                    Toast.makeText(
-                            preference.context, getString(R.string.menu_refresh) + " ??\n" + getString(R.string.pref_random_useragent_caution),
-                            Toast.LENGTH_SHORT
-                    ).show()
+                    requireRestartBrowserToast(preference, getString(R.string.pref_random_useragent_caution))
                     true
                 }
                 else -> {
                     super.onPreferenceTreeClick(preference)
                 }
             }
+        }
+
+        private fun requireRestartBrowserToast(preference: Preference, additional: String) {
+            Toast.makeText(
+                preference.context,
+                getString(R.string.menu_refresh) + "\n" + additional,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         private fun editHomePage(preference: Preference) {

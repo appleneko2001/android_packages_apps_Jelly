@@ -53,7 +53,7 @@
     <string name="pref_cookie_clear_done">已清除所有 Cookies</string>
     <string name="pref_do_not_track_title">不跟踪</string>
     <string name="pref_do_not_track_summary">发送“不跟踪”请求到您浏览的网站</string>
-    <string name="pref_suggestions_provider">建议提供商</string>
+    <string name="pref_suggestions_provider">搜索建议提供商</string>
     <string name="pref_reach_mode_title">单手模式</string>
     <string name="pref_reach_mode_summary">重新排列界面元素以便于单手操作</string>
     <string name="history_title">历史记录</string>
@@ -99,4 +99,23 @@
     <string name="location_dialog_allow">允许</string>
     <string name="location_dialog_block">阻止</string>
     <string name="location_dialog_cancel">本次拒绝</string>
+    <string name="shortcut_in_new_tab">新标签页</string>
+    <string name="menu_kill_others">关闭其他标签页</string>
+    <string name="menu_kill_tab">关闭标签页</string>
+    <string name="menu_kill_all">关闭所有标签页</string>
+    <string name="menu_save_url_mht">保存页面为 .mht</string>
+    <string name="pref_force_dark">夜间模式</string>
+    <string name="pref_force_dark_summary">"WebView = v%1$s: 仅将页面内容更改为夜间模式 "</string>
+    <string name="pref_adblocker_title">广告阻挡器</string>
+    <string name="pref_adblocker_summary">阻挡页面中的广告</string>
+    <string name="pref_random_useragent">隐藏 UserAgent</string>
+    <string name="pref_random_useragent_caution">警告：这将破坏网站中的已存账号登录</string>
+    <string name="pref_random_useragent_summary">随机更改浏览器的 UserAgent (警告：这将破坏网站中的已存账号登录)</string>
+    <string name="shortcut_favorites">收藏夹</string>
+    <string name="perf_dpurlbar_height">地址栏高度</string>
+    <string name="perf_dpurlbar_height_summary">调整地址栏高度 (dp)</string>
+    <string name="pref_incognito_policy">默认进入隐身模式</string>
+    <string name="never">永不</string>
+    <string name="always">总是</string>
+    <string name="link_from_another_app">从其他应用打开链接时</string>
 </resources>

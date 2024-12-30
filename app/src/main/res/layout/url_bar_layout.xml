@@ -3,7 +3,8 @@
      SPDX-FileCopyrightText: 2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,8 +16,8 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="urlCardView,moreButton" />
-
-    <com.google.android.material.card.MaterialCardView
+    <!--?attr/colorOutline-->
+    <androidx.cardview.widget.CardView
         android:id="@+id/urlCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -24,8 +25,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        android:backgroundTint="?attr/colorSurfaceVariant"
-        app:cardCornerRadius="5dp"
+        android:background="@android:color/transparent"
+
+        app:cardCornerRadius="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/moreButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +95,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
     <ImageButton
         android:id="@+id/moreButton"

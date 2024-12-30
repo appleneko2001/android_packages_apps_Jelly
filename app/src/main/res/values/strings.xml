@@ -226,9 +226,9 @@
     <!-- Settings: adblocker summary -->
     <string name="pref_adblocker_summary">Block advertisements while browsing</string>
     <!-- Menu & Settings: ... -->
-    <string name="menu_kill_all">Close_all Tabs</string>
-    <string name="menu_kill_others">Close_others</string>
-    <string name="menu_kill_this">Close_this</string>
+    <string name="menu_kill_all">Close all</string>
+    <string name="menu_kill_others">Close other tabs</string>
+    <string name="menu_kill_tab">Close</string>
 
     <string name="pref_force_dark">Night Mode</string>
     <string name="pref_force_dark_summary">WebView = v%1$s: NightMode only force inside web to dark</string>
@@ -251,5 +251,10 @@
     <string name="ssl_x509">\u2B04 x509 \u27A0\u27A0\u27A0\u27A0\u27A0</string>
     <string name="virustotal"><b>+<u>VirusTotal ?</u></b></string>
     <string name="mywot"><b>+<u>MyWOT ?</u></b></string>
+    <string name="perf_dpurlbar_height">URL bar height</string>
+    <string name="perf_dpurlbar_height_summary">Adjust the URL bar height (dp)</string>
 
+    <string name="never">Never</string>
+    <string name="always">Always</string>
+    <string name="link_from_another_app">When opening a link from another app</string>
 </resources>

@@ -50,9 +50,9 @@
     </string-array>
 
     <string-array name="pref_incognito_policy_entries">
-        <item>Never</item>
-        <item>Always</item>
-        <item>When opening a link from another app</item>
+        <item>@string/never</item>
+        <item>@string/always</item>
+        <item>@string/link_from_another_app</item>
     </string-array>
 
     <string-array name="pref_incognito_policy_entryvalues" translatable="false">
@@ -60,5 +60,6 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
 
 </resources>

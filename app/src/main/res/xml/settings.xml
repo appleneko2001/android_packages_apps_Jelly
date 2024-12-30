@@ -61,8 +61,8 @@
         app:min="30"
         app:iconSpaceReserved="false"
         app:key="key_dp_toolbar"
-        app:summary="Adjust urlBarHeight"
-        app:title="dpUrlBar" />
+        app:summary="@string/perf_dpurlbar_height_summary"
+        app:title="@string/perf_dpurlbar_height" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
