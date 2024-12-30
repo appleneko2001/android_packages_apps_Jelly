@@ -103,7 +103,9 @@ class SettingsActivity : AppCompatActivity() {
                 it.summary = UiUtils.fakeUserAgent(requireContext(), false, sharedPreferencesExt.randomUserAgent)
             }
             findPreference<Preference>("key_about_resume")?.let {
-                it.title = context?.getString(R.string.pref_about) + BuildConfig.APPLICATION_ID
+                it.title = context?.getString(R.string.pref_about) + "\n" +
+                        BuildConfig.APPLICATION_ID + "\n" +
+                        "Mod based on com.oF2pks.jquarks"
                 //it.summary =
             }
             findPreference<Preference>("key_about_whatsnew")?.let {
