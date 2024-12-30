@@ -31,7 +31,7 @@ android {
     namespace = "org.lineageos.jelly"
 
     defaultConfig {
-        applicationId = "com.oF2pks.jquarks"
+        applicationId = "ru.appleneko2001.jquarksmod"
         minSdk = 23
         targetSdk = 32 //33onlyShare
         versionCode = 24

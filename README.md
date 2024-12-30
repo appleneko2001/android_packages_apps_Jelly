@@ -7,7 +7,7 @@ Ads blocker and favicon in search bar based on this: https://github.com/CarbonRO
 
 ### Offline reading:
  * .mht (chromiumPC compatible)
- * /Android/data/com.oF2pks.jquarks/files/*.mht
+ * /Android/data/ru.appleneko2001.jquarksmod/files/*.mht
  * ✇Favorites
  * screen Shortcuts
  
