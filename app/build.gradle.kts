@@ -35,7 +35,7 @@ fun getDateCode(now: ZonedDateTime) : Int{
 }
 
 fun getDateText(now: ZonedDateTime) :String {
-    return now.format(DateTimeFormatter.ofPattern("yyyy.mm.dd hh:mm"))
+    return now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm"))
 }
 
 val now: ZonedDateTime = ZonedDateTime.now(ZoneId.of("Etc/UTC"))
