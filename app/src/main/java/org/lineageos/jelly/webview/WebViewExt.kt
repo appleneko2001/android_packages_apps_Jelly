@@ -12,6 +12,7 @@ import android.graphics.Paint
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import org.lineageos.jelly.ui.UrlBarLayout
@@ -50,6 +51,18 @@ class WebViewExt @JvmOverloads constructor(
         super.loadUrl(UrlUtils.getFormattedUri(templateUri, url), this.requestHeaders)
     }
 
+    private fun getUrlFromLastFocusNode() : String?{
+        val href = handler.obtainMessage()
+        requestFocusNodeHref(href)
+        val url = href.data.getString("url")
+
+        if(url?.isNotEmpty() == true){
+            return url
+        }
+
+        return null
+    }
+
     private fun setup() {
         settings.javaScriptEnabled = sharedPreferencesExt.javascriptEnabled
         settings.javaScriptCanOpenWindowsAutomatically = sharedPreferencesExt.javascriptEnabled
@@ -64,9 +77,11 @@ class WebViewExt @JvmOverloads constructor(
             var shouldAllowDownload = false
             override fun onLongClick(v: View): Boolean {
                 val result = hitTestResult
+                /*
                 result.extra?.let {
                     when (result.type) {
-                        HitTestResult.IMAGE_TYPE, HitTestResult.SRC_IMAGE_ANCHOR_TYPE -> {
+                        HitTestResult.IMAGE_TYPE,
+                        HitTestResult.SRC_IMAGE_ANCHOR_TYPE -> {
                             shouldAllowDownload = true
                             activity.showSheetMenu(it, shouldAllowDownload)
                             shouldAllowDownload = false
@@ -80,6 +95,54 @@ class WebViewExt @JvmOverloads constructor(
                         else -> {
                             return false
                         }
+                    }
+                }*/
+                val it = result.extra;
+
+                // TODO: IMPROVE PROCEDURE, IT LOOKS UGLY
+                when (result.type) {
+                    HitTestResult.IMAGE_TYPE,
+                    HitTestResult.SRC_IMAGE_ANCHOR_TYPE -> {
+                        val hrefUrl = getUrlFromLastFocusNode()
+
+                        val urlArray = arrayOf(hrefUrl, it).filterNotNull().toTypedArray()
+
+                        shouldAllowDownload = true
+                        activity.showSheetMenu(urlArray, shouldAllowDownload)
+                        shouldAllowDownload = false
+                        return true
+                    }
+                    HitTestResult.SRC_ANCHOR_TYPE -> {
+                        val urlArray = arrayOf(it).filterNotNull().toTypedArray()
+
+                        activity.showSheetMenu(urlArray, shouldAllowDownload)
+                        shouldAllowDownload = false
+                        return true
+                    }
+                    else -> {
+                        return false
+                    }
+                }
+            }
+        })
+
+        // patch on click events
+        // make the image with href clickable, not image itself
+        setOnTouchListener(object : OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event?.action != MotionEvent.ACTION_POINTER_UP)
+                    return false
+
+                val result = hitTestResult
+
+                if(result.type == HitTestResult.SRC_IMAGE_ANCHOR_TYPE)
+                {
+                    val url = getUrlFromLastFocusNode()
+
+                    if(url != null){
+                        followUrl(url)
+                        v?.performClick()
+                        return true
                     }
                 }
                 return false

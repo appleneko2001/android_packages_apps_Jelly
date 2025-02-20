@@ -23,6 +23,7 @@
     <string name="menu_shortcut">Поместить на главный экран</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_download">Скачать</string>
+    <string name="menu_href_context">Выбрано: %1$s</string>
     <string name="menu_in_new_tab">Открыть в новой вкладке</string>
     <string name="menu_desktop_mode">Версия для компьютера</string>
     <string name="menu_search">Найти на странице</string>

@@ -23,6 +23,7 @@
     <string name="menu_shortcut">添加快捷方式</string>
     <string name="menu_settings">设置</string>
     <string name="menu_download">下载</string>
+    <string name="menu_href_context">已选中：%1$s</string>
     <string name="menu_in_new_tab">在新标签页中打开</string>
     <string name="menu_desktop_mode">桌面版网站</string>
     <string name="menu_search">在页面内查找</string>

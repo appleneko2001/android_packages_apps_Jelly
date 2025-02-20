@@ -11,6 +11,15 @@
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
+    <TextView
+        android:layout_margin="16dp"
+        android:id="@+id/sheetSelectedUrlsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        />
+
     <LinearLayout
         android:id="@+id/sheetNewTabLayout"
         style="@style/Theme.Jelly.BottomSheetLayout">

@@ -47,6 +47,7 @@ import android.webkit.WebSettings
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -538,14 +539,20 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         getSystemService(DownloadManager::class.java).enqueue(request)
     }
 
-    override fun showSheetMenu(url: String, shouldAllowDownload: Boolean) {
+    // TODO: Improve sheetmenu
+    override fun showSheetMenu(urls: Array<String>, shouldAllowDownload: Boolean) {
         val sheet = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.sheet_actions, LinearLayout(this))
         val tabLayout = view.findViewById<View>(R.id.sheetNewTabLayout)
         val shareLayout = view.findViewById<View>(R.id.sheetShareLayout)
         val favouriteLayout = view.findViewById<View>(R.id.sheetFavouriteLayout)
         val downloadLayout = view.findViewById<View>(R.id.sheetDownloadLayout)
+        val urlsTextView = view.findViewById<TextView>(R.id.sheetSelectedUrlsText)
         val copyLayout = view.findViewById<View>(R.id.sheetCopyLayout)
+
+        //urlsTextView.text = urls.joinToString (separator = "\n") { getString(R.string.menu_href_context, it) }
+        val url = urls.first()
+        urlsTextView.text = getString(R.string.menu_href_context, url)
         tabLayout.setOnClickListener {
             openInNewTab(this, url, incognito)
             sheet.dismiss()

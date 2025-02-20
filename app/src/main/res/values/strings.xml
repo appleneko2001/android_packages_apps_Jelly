@@ -45,6 +45,8 @@
     <string name="menu_settings">Settings</string>
     <!-- Menu action: download selected file / image -->
     <string name="menu_download">Download</string>
+    <!-- Sheet menu header text: selected <protocol://link> -->
+    <string name="menu_href_context">Selected: %1$s</string>
     <!-- Menu action: open selected link in a new tab -->
     <string name="menu_in_new_tab">Open in new tab</string>
     <!-- Menu action: desktop mode -->
