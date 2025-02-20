@@ -40,6 +40,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sheetCopyLayout"
+        style="@style/Theme.Jelly.BottomSheetLayout">
+
+        <ImageView
+            style="@style/Theme.Jelly.BottomSheetIcon"
+            android:contentDescription="@string/menu_copy_link_url"
+            android:src="@drawable/ic_content_copy" />
+
+        <TextView
+            style="@style/Theme.Jelly.BottomSheetText"
+            android:text="@string/menu_copy_link_url" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/sheetFavouriteLayout"
         style="@style/Theme.Jelly.BottomSheetLayout">
 

@@ -29,6 +29,8 @@
     <string name="menu_incognito">Incognito tab</string>
     <!-- Menu action: add current page to favorites -->
     <string name="menu_fav_add">Add to favorites</string>
+    <!-- Menu action: copy link -->
+    <string name="menu_copy_link_url">Copy link URL</string>
     <!-- Menu action: share current page -->
     <string name="menu_share">Share</string>
     <!-- Menu action: show favorites list -->
