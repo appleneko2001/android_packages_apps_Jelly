@@ -64,6 +64,9 @@ class WebViewExt @JvmOverloads constructor(
     }
 
     private fun setup() {
+        // some websites would break layout arranges by using wrong text zoom
+        // force it use 100% anyway
+        settings.textZoom = 100
         settings.javaScriptEnabled = sharedPreferencesExt.javascriptEnabled
         settings.javaScriptCanOpenWindowsAutomatically = sharedPreferencesExt.javascriptEnabled
         settings.setGeolocationEnabled(sharedPreferencesExt.locationEnabled)
