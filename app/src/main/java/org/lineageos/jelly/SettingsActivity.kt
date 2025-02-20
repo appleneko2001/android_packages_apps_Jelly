@@ -100,7 +100,7 @@ class SettingsActivity : AppCompatActivity() {
             }
             findPreference<Preference>("key_about_useragent")?.let {
                 it.title = "UserAgent: WebView v$vWebview"
-                it.summary = UiUtils.fakeUserAgent(requireContext(), false, sharedPreferencesExt.randomUserAgent)
+                it.summary = UiUtils.chooseUserAgent(requireContext(), false)
             }
             findPreference<Preference>("key_about_resume")?.let {
                 it.title = context?.getString(R.string.pref_about) + "\n" +
@@ -170,6 +170,10 @@ class SettingsActivity : AppCompatActivity() {
                     editHomePage(preference)
                     true
                 }
+                "key_custom_useragent" -> {
+                    editCustomUserAgent(preference)
+                    true
+                }
                 "key_about_notice" -> {
                     showZinfo(this.resources.openRawResource(R.raw.full_description).bufferedReader().use { it1 -> it1.readText() } +
                             "\n" + context?.getString(R.string.pref_context)
@@ -217,7 +221,7 @@ class SettingsActivity : AppCompatActivity() {
                 }
                 "key_random_useragent" -> {
                     findPreference<Preference>("key_about_useragent")?.let {
-                        it.summary = UiUtils.fakeUserAgent(requireContext(), false, sharedPreferencesExt.randomUserAgent)
+                        it.summary = UiUtils.chooseUserAgent(requireContext(), false)//UiUtils.fakeUserAgent(requireContext(), false, sharedPreferencesExt.randomUserAgent)
                     }
                     requireRestartBrowserToast(preference, getString(R.string.pref_random_useragent_caution))
                     true
@@ -264,6 +268,27 @@ class SettingsActivity : AppCompatActivity() {
                     val url = sharedPreferencesExt.defaultHomePage
                     sharedPreferencesExt.homePage = url
                     preference.summary = url
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
+
+        private fun editCustomUserAgent(preference: Preference) {
+            val builder = AlertDialog.Builder(preference.context)
+            val alertDialog = builder.create()
+            val inflater = alertDialog.layoutInflater
+            val rootContentView = inflater.inflate(
+                R.layout.dialog_useragent_edit,
+                LinearLayout(preference.context)
+            )
+            val useragentEditText = rootContentView.findViewById<EditText>(R.id.useragentEditText)
+            useragentEditText.setText(sharedPreferencesExt.customUserAgent)
+            builder.setTitle("Modify UserAgent string")
+                .setView(rootContentView)
+                .setPositiveButton(
+                    android.R.string.ok
+                ) { _: DialogInterface?, _: Int ->
+                    sharedPreferencesExt.customUserAgent = useragentEditText.text.toString()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()

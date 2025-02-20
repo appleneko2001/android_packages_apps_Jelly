@@ -47,6 +47,16 @@ object UiUtils {
         return tmp
     }
 
+    fun chooseUserAgent(ctx: Context, b: Boolean): String {
+        val sharedPreferencesExt by lazy { SharedPreferencesExt(ctx) }
+        val ua = sharedPreferencesExt.customUserAgent
+
+        if(ua.isNotEmpty())
+            return ua
+
+        return fakeUserAgent(ctx, b, sharedPreferencesExt.randomUserAgent)
+    }
+
     fun fakeUserAgent(ctx: Context, b: Boolean, bWay: Boolean): String {
         val tmp = if (b) ((0..100000).random().toString() + "." + (0..1000).random())
         else "?????.???"

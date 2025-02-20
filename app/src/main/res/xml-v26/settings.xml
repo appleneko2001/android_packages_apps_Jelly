@@ -110,6 +110,13 @@
             app:summary="@string/pref_random_useragent_summary"
             app:title="@string/pref_random_useragent" />
 
+        <Preference
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:key="key_custom_useragent"
+            app:summary="@string/pref_custom_useragent_summary"
+            app:title="@string/pref_custom_useragent"/>
+
         <SwitchPreference
             app:defaultValue="1"
             app:iconSpaceReserved="false"

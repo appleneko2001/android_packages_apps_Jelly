@@ -70,6 +70,10 @@ class SharedPreferencesExt(context: Context) {
     val randomUserAgent: Boolean
         get() = sharedPreferences.getBoolean(RANDOM_USERAGENT, false)
 
+    var customUserAgent: String
+        get() = sharedPreferences.getString(CUSTOM_USERAGENT, "") ?: ""
+        set(value) = sharedPreferences.edit { putString(CUSTOM_USERAGENT, value) }
+
     val doNotTrackEnabled: Boolean
         get() = sharedPreferences.getBoolean(DO_NOT_TRACK_ENABLED_KEY, DO_NOT_TRACK_ENABLED_DEFAULT)
 
@@ -123,5 +127,6 @@ class SharedPreferencesExt(context: Context) {
         private const val DP_URLBAR_KEY = "key_dp_toolbar"
         private const val FORCE_DARK_KEY = "key_force_dark"
         private const val RANDOM_USERAGENT = "key_random_useragent"
+        private const val CUSTOM_USERAGENT = "key_custom_useragent_string"
     }
 }
