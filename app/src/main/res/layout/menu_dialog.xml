@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="4dp"
-                android:paddingVertical="12dp">
+                android:paddingVertical="8dp">
 
                 <ImageButton
                     android:id="@+id/backButton"
