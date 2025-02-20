@@ -78,8 +78,7 @@
 
     <LinearLayout
         android:id="@+id/sheetDownloadLayout"
-        style="@style/Theme.Jelly.BottomSheetLayout"
-        android:visibility="gone">
+        style="@style/Theme.Jelly.BottomSheetLayout">
 
         <ImageView
             style="@style/Theme.Jelly.BottomSheetIcon"

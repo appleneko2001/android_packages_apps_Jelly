@@ -553,6 +553,11 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
         //urlsTextView.text = urls.joinToString (separator = "\n") { getString(R.string.menu_href_context, it) }
         val url = urls.first()
         urlsTextView.text = getString(R.string.menu_href_context, url)
+
+        // usually the second url should be icons / pictures or smth
+        // the first url of URLs is href (hyperlink to the next page)
+        val possibleDownloadableUrl = urls.last()
+
         tabLayout.setOnClickListener {
             openInNewTab(this, url, incognito)
             sheet.dismiss()
@@ -572,12 +577,18 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
             }
             sheet.dismiss()
         }
+
+        downloadLayout.visibility = when(shouldAllowDownload)
+        {
+            true->View.VISIBLE
+            false->View.GONE
+        }
+
         if (shouldAllowDownload) {
             downloadLayout.setOnClickListener {
-                downloadFileAsk(url, webView.settings.userAgentString, null, null, 0)
+                downloadFileAsk(possibleDownloadableUrl, webView.settings.userAgentString, null, null, 0)
                 sheet.dismiss()
             }
-            downloadLayout.visibility = View.VISIBLE
         }
         sheet.setContentView(view)
         sheet.show()
