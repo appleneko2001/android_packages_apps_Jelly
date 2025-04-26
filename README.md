@@ -2,6 +2,11 @@
 Jelly browser with ads blocker, support for android 6.0+, a few ui changes and some bug fixes.
 Ads blocker and favicon in search bar based on this: https://github.com/CarbonROM/android_packages_apps_Quarks
 
+### TODO:
++ [ ] improve UI/UX
++ [ ] refactor code
++ [ ] clarify "Advanced share" feature usage (it might breaks webpage url share)
+
 ### Ads blocker:
  * https://pgl.yoyo.org/as/serverlist.php?hostformat=nohtml&showintro=0
 
