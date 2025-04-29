@@ -6,6 +6,7 @@
 package org.lineageos.jelly.webview
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -31,6 +32,7 @@ import org.lineageos.jelly.utils.AdBlocker
 import org.lineageos.jelly.utils.IntentUtils
 import org.lineageos.jelly.utils.SharedPreferencesExt
 import org.lineageos.jelly.utils.UrlUtils
+import java.net.URI
 import java.net.URISyntaxException
 
 internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient() {
@@ -46,6 +48,26 @@ internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient
         urlBarLayout.onPageLoadFinished(view.certificate)
     }
 
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        val url = requireNotNull(url)
+
+        val webViewExt = view as WebViewExt
+        val needsLookup = (!TextUtils.equals(url, webViewExt.lastLoadedUrl))
+        if (!webViewExt.isIncognito
+            && needsLookup
+            && startActivityForUrl(view, url)
+        ) {
+            return true
+        } else if (webViewExt.requestHeaders.isNotEmpty()) {
+            webViewExt.followUrl(url)
+            return true
+        }
+
+        return false
+    }
+
+    // TODO: page forwarding filter
+    @TargetApi(Build.VERSION_CODES.N)
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
         if (request.isForMainFrame) {
             val webViewExt = view as WebViewExt
@@ -96,6 +118,32 @@ internal class WebClient(private val urlBarLayout: UrlBarLayout) : WebViewClient
     }
 
     private fun startActivityForUrl(view: WebView, url: String): Boolean {
+        val uri = URI.create(url)
+
+        // TODO: Ignore unknown scheme and put it to confirmation channel for user to allow click it
+        when (uri.scheme.lowercase()) {
+            "http", "https", "file" -> {
+                // ignored
+            }
+            else -> {
+                android.app.AlertDialog.Builder(view.context)
+                    .setTitle("Confirm open special apps")
+                    .setMessage("You are about to access: $url")
+                    .setPositiveButton("✅Yes! im about to do it")
+                    {
+                        _: DialogInterface?, _: Int ->
+                            startActivityForUrlPrivate(view, url)
+                    }
+                    .setNegativeButton("❎No! leave me alone!", null)
+                    .show()
+                return true
+            }
+        }
+
+        return startActivityForUrlPrivate(view, url)
+    }
+
+    private fun startActivityForUrlPrivate(view: WebView, url: String): Boolean {
         val context = view.context
         var intent = try {
             Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
