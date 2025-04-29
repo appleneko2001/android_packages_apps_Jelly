@@ -99,4 +99,6 @@
     <string name="location_dialog_allow">許可</string>
     <string name="location_dialog_block">ブロック</string>
     <string name="location_dialog_cancel">今回は拒否</string>
+    <string name="intent_open_no_incognito">新しいタブで開く</string>
+    <string name="intent_open_default">新しいシークレットタブ</string>
 </resources>

@@ -119,4 +119,6 @@
     <string name="never">永不</string>
     <string name="always">总是</string>
     <string name="link_from_another_app">从其他应用打开链接时</string>
+    <string name="intent_open_no_incognito">正常访问</string>
+    <string name="intent_open_default">隐身</string>
 </resources>

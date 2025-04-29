@@ -32,8 +32,11 @@ class LaunchFileActivity : AppCompatActivity() {
     private var fos: FileOutputStream? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        intent = getIntent()
+        //intent = getIntent()
         if (intent != null && intent!!.action != null) {
+            // Received open page from Share
+            val noIncognito = intent.component?.shortClassName?.contains("OpenNoIncognito") == true
+
             if (intent!!.action == Intent.ACTION_SEND) {
                 url = intent!!.getStringExtra(Intent.EXTRA_TEXT)
                 if (url == null) {
@@ -50,11 +53,11 @@ class LaunchFileActivity : AppCompatActivity() {
                         containsURL
                     }
                 }
-                openInNewTab(this, url, true)
+                openInNewTab(this, url, !noIncognito)
             } else if (intent!!.action == Intent.ACTION_PROCESS_TEXT && intent!!.getStringExtra(Intent.EXTRA_PROCESS_TEXT) != null) {
-                openInNewTab(this, intent!!.getStringExtra(Intent.EXTRA_PROCESS_TEXT), true)
+                openInNewTab(this, intent!!.getStringExtra(Intent.EXTRA_PROCESS_TEXT), !noIncognito)
             } else if (intent!!.action == Intent.ACTION_WEB_SEARCH && intent!!.getStringExtra(SearchManager.QUERY) != null) {
-                openInNewTab(this, intent!!.getStringExtra(SearchManager.QUERY), true)
+                openInNewTab(this, intent!!.getStringExtra(SearchManager.QUERY), !noIncognito)
             } else if (intent!!.getBooleanExtra("kill_all", false)) {
                 TabUtils.killAll(applicationContext)
             } else if (intent!!.scheme != null &&

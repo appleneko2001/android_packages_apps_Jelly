@@ -263,4 +263,9 @@
     <string name="never">Never</string>
     <string name="always">Always</string>
     <string name="link_from_another_app">When opening a link from another app</string>
+
+
+    <!-- Intents: Share receiver -->
+    <string name="intent_open_no_incognito">Visit normally</string>
+    <string name="intent_open_default">Incognito</string>
 </resources>

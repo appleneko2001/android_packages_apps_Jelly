@@ -100,4 +100,5 @@
     <string name="location_dialog_allow">Разрешить</string>
     <string name="location_dialog_block">Блокировать</string>
     <string name="location_dialog_cancel">Пока отказать</string>
+    <string name="intent_open_no_incognito">Открыть в новой вкладке</string>
 </resources>

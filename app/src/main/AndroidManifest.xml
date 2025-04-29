@@ -95,7 +95,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize"
             android:documentLaunchMode="always"
             android:hardwareAccelerated="true"
-            android:label="@string/app_name"
+            android:label="@string/intent_open_default"
             android:requestLegacyExternalStorage="true"
             android:excludeFromRecents="true"
             android:windowSoftInputMode="stateHidden"
@@ -134,6 +134,46 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
+
+        <activity-alias
+            android:exported="true"
+            android:name=".OpenNoIncognito"
+            android:label="@string/intent_open_no_incognito"
+            android:targetActivity=".LaunchFileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="text/xml" />
+                <data android:mimeType="text/mht" />
+                <data android:mimeType="message/rfc822" />
+                <data android:mimeType="application/x-webarchive-xml" />
+
+                <data android:mimeType="text/html" />
+                <data android:mimeType="text/plain" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="image/svg+xml" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.WEB_SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity-alias>
 
         <activity
             android:name=".history.HistoryActivity"
