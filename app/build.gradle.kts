@@ -41,7 +41,7 @@ fun getDateText(now: ZonedDateTime) :String {
 val now: ZonedDateTime = ZonedDateTime.now(ZoneId.of("Etc/UTC"))
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "org.lineageos.jelly"
 
     defaultConfig {
@@ -69,10 +69,11 @@ android {
                     "proguard-rules.pro"
                 )
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("debug") {
             // Append .dev to package name so we won't conflict with AOSP build.
-            //applicationIdSuffix = ".dev"
+            applicationIdSuffix = ".dev"
         }
     }
 
