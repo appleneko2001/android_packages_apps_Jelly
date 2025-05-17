@@ -6,6 +6,8 @@
 import org.lineageos.generatebp.GenerateBpPlugin
 import org.lineageos.generatebp.GenerateBpPluginExtension
 import org.lineageos.generatebp.models.Module
+import java.io.FileInputStream
+import java.security.MessageDigest
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -74,6 +76,51 @@ android {
         getByName("debug") {
             // Append .dev to package name so we won't conflict with AOSP build.
             applicationIdSuffix = ".dev"
+        }
+    }
+
+    // Generate hash of the output file
+    applicationVariants.all {
+        val variant = this
+        outputs.forEach { output ->
+            val outputFile = output.outputFile
+            if (outputFile.name.endsWith(".apk")) {
+                val assembleTaskName = "assemble${variant.name.capitalize()}"
+                val hashTaskName = "generate${variant.name.capitalize()}ApkHash"
+
+                tasks.register(hashTaskName) {
+                    outputs.upToDateWhen { false }
+
+                    val outputPath = "${outputFile.parentFile}/${outputFile.nameWithoutExtension}-SHA256.txt"
+
+                    inputs.file(outputFile)
+                    outputs.file(outputPath)
+
+                    doLast {
+                        val inputFile = file(outputFile)
+                        val outputHashFile = file(outputPath)
+                        val messageDigest = MessageDigest.getInstance("SHA-256")
+                        val fileInputStream = FileInputStream(inputFile)
+                        val buffer = ByteArray(8192)
+                        var bytesRead: Int
+
+                        while (fileInputStream.read(buffer).also { bytesRead = it } != -1) {
+                            messageDigest.update(buffer, 0, bytesRead)
+                        }
+                        fileInputStream.close()
+
+                        val hashBytes = messageDigest.digest()
+                        val hexHash = hashBytes.joinToString("") { "%02x".format(it) }
+
+                        outputHashFile.writeText(hexHash)
+                        println("SHA-256 hash for ${inputFile.name}: $hexHash")
+                    }
+                }
+
+                tasks.named(assembleTaskName) {
+                    finalizedBy(hashTaskName)
+                }
+            }
         }
     }
 
