@@ -24,7 +24,7 @@ abstract class WebViewExtActivity : AppCompatActivity() {
     abstract fun onFaviconLoaded(favicon: Bitmap?)
     abstract fun onShowCustomView(view: View?, callback: CustomViewCallback)
     abstract fun onHideCustomView()
-    abstract fun launchFileRequest(input: Array<String>)
+    abstract fun launchFileRequest(input: Array<String>, multiple: Boolean)
     abstract fun setFileRequestCallback(cb: ((data: List<Uri>) -> Unit))
     abstract fun showLocationDialog(origin: String, callback: GeolocationPermissions.Callback)
 }

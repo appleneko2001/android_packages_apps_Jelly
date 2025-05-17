@@ -53,9 +53,27 @@ internal class ChromeClient(
         }
 
         try {
-            activity.launchFileRequest(params.acceptTypes.mapNotNull {
+            val acceptedTypes = params.acceptTypes.mapNotNull {
                 MimeTypeMap.getSingleton().getMimeTypeFromExtension(it)
-            }.toTypedArray().takeIf { it.isNotEmpty() } ?: arrayOf("*/*"))
+            }.toTypedArray().takeIf { it.isNotEmpty() } ?: arrayOf("*/*")
+            when (params.mode) {
+                FileChooserParams.MODE_OPEN -> {
+                    activity.launchFileRequest(acceptedTypes, false)
+                }
+                FileChooserParams.MODE_OPEN_MULTIPLE -> {
+                    activity.launchFileRequest(acceptedTypes, true)
+                }
+                FileChooserParams.MODE_SAVE -> {
+                    // TODO: save as support, tbh not sure yet
+                    Toast.makeText(
+                        activity, "FileChooserParams.MODE_SAVE NOT IMPLEMENTED",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else -> {
+
+                }
+            }
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
                 activity, activity.getString(R.string.error_no_activity_found),

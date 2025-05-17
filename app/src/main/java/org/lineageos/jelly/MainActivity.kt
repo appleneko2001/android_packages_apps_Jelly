@@ -9,6 +9,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityManager.TaskDescription
 import android.app.DownloadManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -50,6 +51,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -101,12 +103,53 @@ class MainActivity : WebViewExtActivity(), SharedPreferences.OnSharedPreferenceC
     private val incognitoIcon by lazy {  findViewById<View>(R.id.incognitoIcon) as ImageButton }
 
     private val fileRequest =
-        registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {
+        /*registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) {
             fileRequestCallback.invoke(it)
+        }*/
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult())  {
+            val intentResult = it
+            val intentData = it.data
+
+            if(intentResult.resultCode != Activity.RESULT_OK || intentData == null)
+            {
+                fileRequestCallback.invoke(ArrayList())
+                return@registerForActivityResult
+            }
+
+            val list = ArrayList<Uri>()
+            val inputs = intentData.clipData
+
+            if(inputs != null){
+                for (i in 0 until inputs.itemCount) {
+                    list.add(requireNotNull(inputs.getItemAt(i).uri))
+                }
+            }
+            else
+                list.add(requireNotNull(intentData.data))
+
+            fileRequestCallback.invoke(list)
         }
+
     private lateinit var fileRequestCallback: ((data: List<Uri>) -> Unit)
-    override fun launchFileRequest(input: Array<String>) {
-        fileRequest.launch(input)
+    override fun launchFileRequest(input: Array<String>, multiple: Boolean) {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("*/*")
+
+        if(multiple)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+        // TODO: constant request code for such intent request
+        val sender = PendingIntent.getActivity(this,
+            487389473,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE)
+            .intentSender
+
+        fileRequest.launch(IntentSenderRequest.Builder(sender)
+            .setFillInIntent(null)
+            .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION, 0)
+            .build())
     }
     override fun setFileRequestCallback(cb: (data: List<Uri>) -> Unit) {
         fileRequestCallback = cb
